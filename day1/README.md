@@ -25,8 +25,8 @@ resource "aws_instance" "db" {
 
 ## 코드 내용
 ### 암시적(Implicit), 명시적(explicit) 종속성
-- 암시적 종속성 (Implicit Dependency)
- EC2 인스턴스가 생성된 이후에 EIP가 생성되어 연결 됨
+- 암시적 종속성 (Implicit Dependency)  
+EC2 인스턴스가 생성된 이후에 EIP가 생성되어 연결 됨
  ```
 resource "aws_instance" "example_a" {
    ami           = data.aws_ami.amazon_linux.id
@@ -38,14 +38,14 @@ resource "aws_eip" "ip" {
    instance = aws_instance.example_a.id
 }
  ```
-- 명시적 종속성 (Explicit Dependency)
- S3 버킷이 생성된 후에 EC2 인스턴스가 생성 됨 (depends_on 리소스를 먼저 생성 후에 현재 리소스 생성)
+- 명시적 종속성 (Explicit Dependency)  
+S3 버킷이 생성된 후에 EC2 인스턴스가 생성 됨 (depends_on 리소스를 먼저 생성 후에 현재 리소스 생성)
  ```
-    resource "aws_instance" "example" {
-    ami           = "ami-2757f631"
-    instance_type = "t2.micro"
-    depends_on = [aws_s3_bucket.company_data]
-    }
+resource "aws_instance" "example" {
+   ami           = "ami-2757f631"
+   instance_type = "t2.micro"
+   depends_on = [aws_s3_bucket.company_data]
+}
  ```
 ### terraform.tfstate
  - 현재 리소스의 상태를 저장
