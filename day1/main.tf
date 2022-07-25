@@ -1,3 +1,5 @@
+# aws, azure, google cloud platform
+
 terraform {
   required_providers {
     aws = {
@@ -11,24 +13,14 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
-data "aws_ami" "amazon_linux_2" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-kernel-5.10-*"]
-  }
-}
-
 resource "aws_instance" "example" {
   ami = data.aws_ami.amazon_linux_2.image_id
   instance_type = "t2.micro"
 
-  availability_zone = "ap-northeast-2a"
+  availability_zone = "ap-northeast-2c"
   associate_public_ip_address = true
 
-  subnet_id = "subnet-0cdfe9eb474e473ec"
+  subnet_id = "subnet-0ac6117143d6d85a7"
   vpc_security_group_ids = [ 
     "sg-08407e6e72976f46b"
   ]
@@ -55,4 +47,14 @@ output "example_instance_public_ip" {
 output "example_instance_private_ip" {
   description = "Output example instance private IP"
   value = aws_instance.example.private_ip
+}
+
+data "aws_ami" "amazon_linux_2" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10-*"]
+  }
 }
