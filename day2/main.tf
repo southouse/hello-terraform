@@ -14,7 +14,7 @@ provider "aws" {
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "${var.common_prefix}"
+  name = "${var.environment}-${var.common_prefix}"
   cidr = "192.168.0.0/22"
 
   azs = ["ap-northeast-2a", "ap-northeast-2b", "ap-northeast-2c"]
@@ -32,21 +32,20 @@ module "vpc" {
   enable_nat_gateway = false
   # single_nat_gateway = true
 
-  tags = {
-    "Environment" = "${var.environment}",
-    "Terraform" = true
-  }
+  tags = "${local.common_tags}"
 
-  igw_tags = {
-    "Name" = "${var.common_prefix}-igw",
-    "Environment" = "${var.environment}",
-    "Terraform" = true
-  }
+  igw_tags = "${merge(
+    local.common_tags,
+    tomap ({
+      "Name" = "${var.common_prefix}-igw"
+    })
+  )}"
 
-  database_subnet_group_tags = {
-    "Name" = "${var.common_prefix}-private-db-subnet-group",
-    "Environment" = "${var.environment}",
-    "Terraform" = true
-  }
+  database_subnet_group_tags = "${merge(
+    local.common_tags,
+    tomap ({
+      "Name" = "${var.common_prefix}-private-db-subnet-group"
+    })
+  )}"
 
 }
