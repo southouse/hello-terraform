@@ -1,5 +1,6 @@
 # Day 1
 EC2 프로비저닝
+![ec2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FoRKjx%2FbtrIaQB2kXz%2F4P0rUZUa0zgK5aJIVLmVzK%2Fimg.png)
 
 ## 환경 구성
 - IAM 그룹 및 권한 생성
